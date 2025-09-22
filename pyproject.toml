@@ -1,17 +1,30 @@
 [project]
 name = "anki-korean"
 version = "0.1.0"
-description = "Add your description here"
+description = "A"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "ffmpeg-python>=0.2.0",
     "genanki>=0.13.1",
     "opencv-python>=4.12.0.88",
+    "pandas>=2.3.2",
     "pytesseract>=0.3.13",
 ]
 
 [dependency-groups]
 dev = [
     "black>=25.1.0",
+    "pre-commit>=4.3.0",
+    "ruff>=0.13.1",
+    "ty>=0.0.1a21",
 ]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+lint.select = ["E", "W", "F", "I"]
+exclude = [".git", "__pycache__", ".venv"]
+
+[tool.ruff.format]
+quote-style = "double"
