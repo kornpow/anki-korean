@@ -1,1 +1,3 @@
 *.apkg
+.DS_Store
+cropped_boxes/
