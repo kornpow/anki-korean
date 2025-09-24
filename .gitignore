@@ -1,3 +1,9 @@
 *.apkg
 .DS_Store
+
+__pycache__/
+
+# folders with image and video files
 cropped_boxes/
+sources/
+frames/

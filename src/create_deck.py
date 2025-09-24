@@ -1,4 +1,4 @@
-from genanki import Note, Model, Deck, Package
+from genanki import Deck, Model, Note, Package
 
 
 def main():

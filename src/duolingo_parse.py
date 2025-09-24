@@ -6,9 +6,10 @@
 # 4) Deduplicate and save to /mnt/data/english_korean.csv
 # 5) Also save sampled frames for user inspection
 
-import cv2
 import os
 import re
+
+import cv2
 import pandas as pd
 
 video_path = "/mnt/data/ScreenRecording_06-19-2025 15-52-55_1.mov"
@@ -49,14 +50,19 @@ ocr_ok = True
 try:
     import pytesseract
     from PIL import Image
-except Exception as e:
+except Exception:
     ocr_ok = False
-    print("WARNING: OCR libraries not available in this environment. Extracted frames were saved for manual review.")
+    print(
+        "WARNING: OCR libraries not available in this environment.\n"
+        "Extracted frames were saved for manual review."
+    )
 
 pairs = []
 
 if ocr_ok:
-    frame_files = sorted([os.path.join(out_frames_dir, f) for f in os.listdir(out_frames_dir) if f.endswith(".png")])
+    frame_files = sorted(
+        [os.path.join(out_frames_dir, f) for f in os.listdir(out_frames_dir) if f.endswith(".png")]
+    )
     # Basic preprocessing + OCR
     for fpath in frame_files:
         try:
@@ -65,13 +71,13 @@ if ocr_ok:
             txt = pytesseract.image_to_string(img, lang="eng+kor")
             if txt.strip():
                 text_by_frame[os.path.basename(fpath)] = txt
-        except Exception as e:
+        except Exception:
             # Try fallback with just eng
             try:
                 txt = pytesseract.image_to_string(img, lang="eng")
                 if txt.strip():
                     text_by_frame[os.path.basename(fpath)] = txt
-            except Exception as e2:
+            except Exception:
                 continue
 
     # Heuristics to extract "english - korean" pairs
