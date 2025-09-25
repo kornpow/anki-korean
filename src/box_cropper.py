@@ -68,11 +68,11 @@ def apply_large_crop(
     return cropped_img, (x, y)
 
 
-def detect_boxes(
-    img: np.ndarray, min_area: int = 5000, min_width: int = 100, min_height: int = 30
-) -> List[Tuple[int, int, int, int]]:
+def detect_and_crop_boxes_from_image(
+    img: np.ndarray, min_area: int = 5000, min_width: int = 809, min_height: int = 175
+) -> List[np.ndarray]:
     """
-    Detect rectangular boxes in an image
+    Detect rectangular boxes in an image and return cropped box images
 
     Args:
         img: Input image as numpy array
@@ -81,7 +81,7 @@ def detect_boxes(
         min_height: Minimum height for detected boxes
 
     Returns:
-        List of bounding boxes as (x, y, width, height) tuples, sorted top to bottom
+        List of cropped box images as numpy arrays
     """
     # Convert to grayscale and find edges
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -90,41 +90,19 @@ def detect_boxes(
     # Find contours
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # Filter contours to find boxes
-    boxes: List[Tuple[int, int, int, int]] = []
+    # Filter contours and crop boxes
+    cropped_boxes: List[np.ndarray] = []
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         area: int = w * h
 
         # Filter by size
         if area > min_area and w > min_width and h > min_height:
-            boxes.append((x, y, w, h))
+            cropped = img[y : y + h, x : x + w]
+            cropped_boxes.append(cropped)
+            print(f"Found box with size: {w}x{h}")
 
-    # Sort boxes top to bottom
-    boxes.sort(key=lambda box: box[1])
-
-    print(f"Found {len(boxes)} boxes")
-    return boxes
-
-
-def crop_boxes_from_image(
-    img: np.ndarray, boxes: List[Tuple[int, int, int, int]]
-) -> List[np.ndarray]:
-    """
-    Extract individual box regions from an image
-
-    Args:
-        img: Input image as numpy array
-        boxes: List of bounding boxes as (x, y, width, height) tuples
-
-    Returns:
-        List of cropped box images as numpy arrays
-    """
-    cropped_boxes: List[np.ndarray] = []
-    for x, y, w, h in boxes:
-        cropped = img[y : y + h, x : x + w]
-        cropped_boxes.append(cropped)
-
+    print(f"Found {len(cropped_boxes)} boxes")
     return cropped_boxes
 
 
@@ -154,27 +132,6 @@ def save_images(images: List[np.ndarray], output_dir: str = "cropped_boxes") -> 
     return saved_files
 
 
-def save_large_crop_reference(
-    img: np.ndarray, base_name: str, output_dir: str = "cropped_boxes"
-) -> str:
-    """
-    Save the large crop image as a reference
-
-    Args:
-        img: Large crop image as numpy array
-        base_name: Base filename for output
-        output_dir: Directory to save image
-
-    Returns:
-        Path to saved file
-    """
-    os.makedirs(output_dir, exist_ok=True)
-    filename = f"{output_dir}/{base_name}_large_crop.png"
-    cv2.imwrite(filename, img)
-    print(f"Saved large crop: {filename}")
-    return filename
-
-
 def detect_and_crop_boxes(img: np.ndarray) -> List[np.ndarray]:
     """
     Detect boxes in an image and return cropped box images
@@ -185,15 +142,7 @@ def detect_and_crop_boxes(img: np.ndarray) -> List[np.ndarray]:
     Returns:
         List of cropped box images as numpy arrays
     """
-    # Detect boxes
-    boxes = detect_boxes(img)
-    if not boxes:
-        print("No boxes found")
-        return []
-
-    # Crop individual boxes
-    cropped_images = crop_boxes_from_image(img, boxes)
-    return cropped_images
+    return detect_and_crop_boxes_from_image(img)
 
 
 def process_image_file(
@@ -233,8 +182,7 @@ def process_image_file(
 
     saved_files: List[str] = []
 
-    filename: str = f"{output_dir}/{base_name}_bigcrop.png"
-
+    filename: str = f"tempframes/{base_name}_bigcrop.png"
     cv2.imwrite(filename, img)
 
     for i, cropped_img in enumerate(cropped_images):

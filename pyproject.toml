@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "ffmpeg-python>=0.2.0",
     "genanki>=0.13.1",
+    "imagehash>=4.3.2",
     "opencv-python>=4.12.0.88",
     "pandas>=2.3.2",
     "pytesseract>=0.3.13",

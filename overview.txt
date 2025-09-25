@@ -1,0 +1,38 @@
+Korean-English Image Processing Overview
+========================================
+
+TASK: Parse Korean and English text from 1,353 images in cropped_boxes/ directory and create a CSV file.
+
+APPROACH:
+1. Each image contains Korean text (larger, black) and English translation (smaller, gray)
+2. Using developer__image_processor tool to visually analyze each image
+3. Manually extracting text pairs from each processed image
+4. Appending results to korean_english_pairs.csv using shell echo commands
+
+PROGRESS:
+- Total images: 1,353
+- Processed so far: ~13 images
+- Method: Sequential processing, one image at a time
+- Output format: filename,korean_text,english_text
+
+CHALLENGES:
+- Large volume of images requires manual processing
+- Some images may be missing (getting file not found errors)
+- Process is time-intensive but accurate since no OCR is used
+
+CURRENT STATUS:
+- CSV file created with proper headers
+- Successfully processing images in sequence
+- Using append mode to avoid context size issues
+- Duplicates are being preserved as requested
+
+NEXT STEPS:
+- Continue processing remaining ~1,340 images
+- Verify final CSV completeness
+- Handle any missing files encountered
+
+FILES CREATED:
+- korean_english_pairs.csv (main output)
+- batch_processor.py (helper script)
+- remaining_files.txt (list of unprocessed files)
+- overview.txt (this file)
