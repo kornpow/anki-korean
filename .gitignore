@@ -7,3 +7,6 @@ __pycache__/
 cropped_boxes/
 sources/
 frames/
+
+.venv/
+imports/

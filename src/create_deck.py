@@ -1,3 +1,4 @@
+import argparse
 import csv
 import os
 import random
@@ -19,7 +20,7 @@ def remove_duplicates_from_csv(csv_file_path: str) -> List[Tuple[str, str]]:
     duplicate_count = 0
 
     try:
-        with open(csv_file_path, "r", encoding="utf-8") as csvfile:
+        with open(csv_file_path, "r", encoding="utf-8-sig") as csvfile:
             reader = csv.DictReader(csvfile)
 
             for row in reader:
@@ -30,12 +31,15 @@ def remove_duplicates_from_csv(csv_file_path: str) -> List[Tuple[str, str]]:
                 if not korean_text or not english_text:
                     continue
 
-                # Use korean_text as key to identify duplicates
-                if korean_text in unique_pairs:
+                # Preserve different meanings for the same Korean spelling.
+                if (korean_text, english_text.casefold()) in unique_pairs:
                     duplicate_count += 1
                     print(f"Duplicate found and removed: {korean_text} -> {english_text}")
                 else:
-                    unique_pairs[korean_text] = english_text
+                    unique_pairs[(korean_text, english_text.casefold())] = (
+                        korean_text,
+                        english_text,
+                    )
 
     except Exception as e:
         print(f"Error reading CSV file: {e}")
@@ -44,10 +48,16 @@ def remove_duplicates_from_csv(csv_file_path: str) -> List[Tuple[str, str]]:
     print(f"Removed {duplicate_count} duplicate entries")
     print(f"Total unique Korean-English pairs: {len(unique_pairs)}")
 
-    return [(korean, english) for korean, english in unique_pairs.items()]
+    return list(unique_pairs.values())
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Create an Anki deck from Korean/English CSV pairs"
+    )
+    parser.add_argument("--csv", default="korean_english_pairs.csv", help="Input vocabulary CSV")
+    parser.add_argument("--output", help="Output .apkg path (default: korean_vocabulary.apkg)")
+    args = parser.parse_args()
     # Define the model for the flashcards
     my_model = Model(
         random.randrange(1 << 30, 1 << 31),
@@ -71,7 +81,7 @@ def main() -> None:
     my_deck = Deck(random.randrange(1 << 30, 1 << 31), deck_name)
 
     # Process CSV file and remove duplicates
-    csv_file_path = "korean_english_pairs.csv"
+    csv_file_path = args.csv
     unique_pairs = remove_duplicates_from_csv(csv_file_path)
 
     if not unique_pairs:
@@ -91,8 +101,9 @@ def main() -> None:
 
     # Write the deck to file
     try:
-        Package(my_deck).write_to_file(f"{package_name}.apkg")
-        print(f"Anki deck saved as '{package_name}.apkg'")
+        output_path = args.output or f"{package_name}.apkg"
+        Package(my_deck).write_to_file(output_path)
+        print(f"Anki deck saved as '{output_path}'")
     except Exception as e:
         print(f"Error saving Anki deck: {e}")
 

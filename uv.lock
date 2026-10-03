@@ -12,6 +12,7 @@ dependencies = [
     { name = "imagehash" },
     { name = "opencv-python" },
     { name = "pandas" },
+    { name = "pillow" },
     { name = "pytesseract" },
 ]
 
@@ -30,6 +31,7 @@ requires-dist = [
     { name = "imagehash", specifier = ">=4.3.2" },
     { name = "opencv-python", specifier = ">=4.12.0.88" },
     { name = "pandas", specifier = ">=2.3.2" },
+    { name = "pillow", specifier = ">=11.3.0" },
     { name = "pytesseract", specifier = ">=0.3.13" },
 ]
 
