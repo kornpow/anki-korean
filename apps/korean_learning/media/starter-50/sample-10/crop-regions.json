@@ -1,0 +1,126 @@
+{
+  "coordinate_system": "Source pixels: [left, top, right, bottom].",
+  "selection_rule": "Preserve the whole object and meaningful context. Never isolate lines just to remove non-Korean elements.",
+  "items": [
+    {
+      "pageid": 88146689,
+      "local_path": "notices_and_rules/commons-88146689.jpg",
+      "regions": [
+        [
+          100,
+          85,
+          700,
+          665
+        ]
+      ]
+    },
+    {
+      "pageid": 24269980,
+      "local_path": "shopping_and_services/commons-24269980.jpg",
+      "regions": [
+        [
+          90,
+          175,
+          635,
+          875
+        ]
+      ]
+    },
+    {
+      "pageid": 61682294,
+      "local_path": "notices_and_rules/commons-61682294.jpg",
+      "regions": [
+        [
+          110,
+          105,
+          825,
+          1165
+        ]
+      ]
+    },
+    {
+      "pageid": 27000646,
+      "local_path": "notices_and_rules/commons-27000646.jpg",
+      "regions": [
+        [
+          180,
+          115,
+          775,
+          1150
+        ]
+      ]
+    },
+    {
+      "pageid": 83737549,
+      "local_path": "notices_and_rules/commons-83737549.jpg",
+      "regions": [
+        [
+          0,
+          0,
+          960,
+          916
+        ]
+      ]
+    },
+    {
+      "pageid": 29324208,
+      "local_path": "menus_and_food/commons-29324208.jpg",
+      "regions": [
+        [
+          135,
+          0,
+          890,
+          1285
+        ]
+      ]
+    },
+    {
+      "pageid": 129904869,
+      "local_path": "menus_and_food/commons-129904869.jpg",
+      "regions": [
+        [
+          0,
+          0,
+          960,
+          1280
+        ]
+      ]
+    },
+    {
+      "pageid": 169932950,
+      "local_path": "menus_and_food/commons-169932950.jpg",
+      "regions": [
+        [
+          145,
+          90,
+          950,
+          1240
+        ]
+      ]
+    },
+    {
+      "pageid": 67043692,
+      "local_path": "shopping_and_services/commons-67043692.jpg",
+      "regions": [
+        [
+          0,
+          0,
+          960,
+          720
+        ]
+      ]
+    },
+    {
+      "pageid": 46660703,
+      "local_path": "products_and_labels/commons-46660703.jpg",
+      "regions": [
+        [
+          0,
+          0,
+          960,
+          524
+        ]
+      ]
+    }
+  ]
+}

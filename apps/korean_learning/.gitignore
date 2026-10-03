@@ -1,0 +1,15 @@
+# Local media, generated galleries, runtime data and downloaded tools
+media/.tools/
+media/.venv/
+media/_research/
+media/feedback/
+media/starter-50/**/*.jpg
+media/starter-50/**/*.jpeg
+media/starter-50/**/*.png
+media/starter-50/**/*.webp
+media/starter-50/**/gallery.html
+media/starter-50/**/review-portable.html
+media/starter-50/**/_review_thumbnails/
+media/starter-50/**/_metadata/
+media/starter-50/**/feedback-from-chat.json
+media/starter-50/**/review-summary.json

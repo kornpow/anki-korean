@@ -89,3 +89,20 @@ or partial image failures (inspect the audit files); `2` means an input/setup er
 uv run python -m unittest discover -s tests -v
 uv run ruff check src/duolingo_parse.py src/create_deck.py tests/test_duolingo_parse.py
 ```
+
+## Real-world Korean review app
+
+The [Korean learning app](apps/korean_learning/README.md) lives alongside the
+Duolingo import and Anki tools. It includes contextual photo review, English
+explanations, automatic feedback saving, attributed media catalogs, and the
+learning-tool plans.
+
+```bash
+uv sync --extra review
+uv run --extra review python apps/korean_learning/media/scripts/prepare_media.py
+uv run --extra review python apps/korean_learning/media/scripts/serve_review.py
+```
+
+See the app README for gallery routes, media restoration, existing feedback
+migration, and Obscura browser checks. Downloaded media and personal feedback
+are not committed.
