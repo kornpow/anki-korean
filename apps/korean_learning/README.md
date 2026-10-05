@@ -59,3 +59,32 @@ Implemented: contextual photo review, English explanations, Keep/Maybe/Reject ch
 Planned: themed vocabulary, typed Hangul practice, word-level reading help, spaced repetition, and verb/conjugation practice. These are not implemented learning screens yet. See [the product plan](PLAN.md).
 
 The existing root `src/duolingo_parse.py` and `src/create_deck.py` remain independent working tools. Their vocabulary CSV/JSON is the intended import point for a future shared vocabulary library; the reviewer does not yet import those files automatically.
+
+## Import a Duolingo recording
+
+Open `/import` on the running reviewer, or follow **Import Duolingo video** from
+any gallery. Choose a screen recording with Korean and English visible together.
+Scroll slowly and pause after each scroll. Upload progress is shown separately
+from background word extraction; keep the tab open until uploading finishes.
+The import URL can then be revisited while processing continues.
+
+The page accepts MP4, MOV, M4V, AVI, MKV and WebM, up to 90 MiB and five minutes.
+Codec support depends on OpenCV. Tesseract and its `kor` and `eng` language packs
+are required, as described in the repository README. Extraction samples one frame
+per second. One import processes at a time, with room for one queued upload.
+
+Review detected pairs beside their source frames, edit Korean or English, and
+uncheck unwanted pairs. Low-confidence pairs start unchecked. **Save selected
+words** writes the reviewed selection directly to the server vocabulary library;
+there is no feedback export step. Draft edits stay in this browser. Re-saving
+replaces that import's previous contribution and retains words from other imports.
+Each saved pair records its import, original OCR text, frame and timestamp.
+
+Private import files live in `media/imports/` by default, configurable with
+`--imports-dir`. This ignored directory contains per-import video, job status,
+parser audit files and frames, plus the merged `vocabulary.json` library. Original
+videos and the library are outside the static gallery directory. Import URLs allow
+access to that import's results and frames: this remains a shared-link prototype,
+not an authenticated multi-user service. Back up the imports directory to retain
+recordings and vocabulary. Files are retained until manually removed. Interrupted
+jobs are marked failed on restart and can be uploaded again.
