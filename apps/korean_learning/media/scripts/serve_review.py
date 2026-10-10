@@ -83,8 +83,13 @@ class Handler(SimpleHTTPRequestHandler):
         return payload
 
     def do_GET(self):
-        if urlsplit(self.path).path in ("/import", "/import.html"):
-            body = Path(__file__).with_name("import_template.html").read_bytes()
+        if urlsplit(self.path).path in ("/import", "/import.html", "/study", "/study.html"):
+            template = (
+                "study_template.html"
+                if urlsplit(self.path).path.startswith("/study")
+                else "import_template.html"
+            )
+            body = Path(__file__).with_name(template).read_bytes()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.send_header("Content-Length", str(len(body)))

@@ -54,9 +54,9 @@ The installer targets Linux x86_64. Set `OBSCURA_BINARY` to an existing executab
 
 ## Scope and integration
 
-Implemented: contextual photo review, English explanations, Keep/Maybe/Reject choices, notes, automatic persistence, source attribution, curated media restoration, and Obscura checks.
+Implemented: contextual photo review, English explanations, Keep/Maybe/Reject choices, notes, automatic persistence, source attribution, curated media restoration, video vocabulary imports, themed flashcards, and Obscura checks.
 
-Planned: themed vocabulary, typed Hangul practice, word-level reading help, spaced repetition, and verb/conjugation practice. These are not implemented learning screens yet. See [the product plan](PLAN.md).
+Planned: typed Hangul practice, word-level reading help, spaced repetition, and verb/conjugation practice. These are not implemented learning screens yet. See [the product plan](PLAN.md).
 
 The existing root `src/duolingo_parse.py` and `src/create_deck.py` remain independent working tools. Their vocabulary CSV/JSON is the intended import point for a future shared vocabulary library; the reviewer does not yet import those files automatically.
 
@@ -136,3 +136,24 @@ rather than padding every theme to 20 words. Its private import directory also
 contains `themes.json` and `themed-vocabulary.csv` for inspection. Grouping uses
 Korean meanings; original OCR English and review flags are preserved. Future
 uploads are not automatically classified yet.
+
+
+## Study flashcards
+
+Open `/study` or follow **Study flashcards** from word review. Choose a recording
+and a theme, then reveal each answer and mark **Got it** or **Practice again**.
+Cards can run Korean → English or English → Korean, with optional shuffling and
+a difficult-words-only filter. Flagged OCR entries are excluded by default.
+
+The viewer uses the saved vocabulary selection and its corrections when present,
+otherwise the import candidates. Original English meanings may still need
+checking in word review. Imports without theme metadata offer an All words deck.
+
+Ratings save automatically to each private import's `study.json`. Pending
+ratings are cached in the browser and retried; unique event IDs prevent duplicate
+reviews after network retries. A session can repeat its missed cards. Difficulty
+reflects the latest rating; this is practice tracking, not yet a spaced-repetition
+scheduler. Progress is shared by everyone using this prototype.
+
+Keyboard shortcuts: Space reveals the answer, 1 marks Practice again, and 2
+marks Got it. No feedback export is required.

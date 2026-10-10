@@ -17,7 +17,7 @@ from urllib.parse import parse_qs, urlsplit
 
 MAX_UPLOAD = 90 * 1024 * 1024
 EXTENSIONS = {".mp4", ".mov", ".m4v", ".avi", ".mkv", ".webm"}
-JOB_ROUTE = re.compile(r"^/api/imports/([a-f0-9]{32})(?:/(vocabulary|frames/[^/]+))?$")
+JOB_ROUTE = re.compile(r"^/api/imports/([a-f0-9]{32})(?:/(vocabulary|study|frames/[^/]+))?$")
 
 
 def write_json(path, payload):
@@ -269,7 +269,58 @@ class VideoImports:
             "saved_at": library["updated_at"],
         }
 
+    def study_state(self, id):
+        self.read(id)
+        with self.lock:
+            path = self.directory / id / "study.json"
+            return (
+                json.loads(path.read_text())
+                if path.exists()
+                else {"schema_version": 1, "words": {}, "events": []}
+            )
+
+    def rate_word(self, id, body):
+        if not isinstance(body, dict):
+            raise ValueError("Expected a review object.")
+        card = body.get("card_id")
+        rating = body.get("rating")
+        event = body.get("event_id")
+        job = self.read(id)
+        if (
+            job["status"] != "ready"
+            or type(card) is not int
+            or card not in {row["id"] for row in job.get("candidates", [])}
+        ):
+            raise ValueError("Unknown study card.")
+        if (
+            rating not in ("again", "gotit")
+            or not isinstance(event, str)
+            or not re.fullmatch(r"[a-f0-9]{32}", event)
+        ):
+            raise ValueError("Invalid study rating.")
+        with self.lock:
+            state = self.study_state(id)
+            if event in state["events"]:
+                return state
+            word = state["words"].setdefault(str(card), {"reviews": 0, "again_count": 0})
+            word.update(difficult=rating == "again", last_rating=rating, reviewed_at=now())
+            word["reviews"] += 1
+            word["again_count"] += rating == "again"
+            # Retain event IDs so network retries never count a review twice.
+            state["events"].append(event)
+            state["updated_at"] = now()
+            write_json(self.directory / id / "study.json", state)
+            return state
+
     def handle_get(self, handler):
+        if urlsplit(handler.path).path == "/api/study/decks":
+            decks = []
+            for path in self.directory.glob("*/job.json"):
+                job = json.loads(path.read_text())
+                if job.get("status") == "ready" and job.get("candidates"):
+                    decks.append({key: job.get(key) for key in ("id", "filename", "created_at")})
+            handler.send_json(200, sorted(decks, key=lambda d: d["created_at"] or "", reverse=True))
+            return True
         route = JOB_ROUTE.fullmatch(urlsplit(handler.path).path)
         if not route:
             return False
@@ -289,6 +340,8 @@ class VideoImports:
                 handler.end_headers()
                 with frame.open("rb") as source:
                     shutil.copyfileobj(source, handler.wfile)
+            elif action == "study":
+                handler.send_json(200, self.study_state(id))
             elif action:
                 raise ValueError("Unknown route.")
             else:
@@ -314,12 +367,17 @@ class VideoImports:
             length = int(handler.headers.get("Content-Length", "0"))
             if route:
                 id, action = route.groups()
-                if action != "vocabulary" or not 0 < length <= 2_000_000:
+                if action not in ("vocabulary", "study") or not 0 < length <= 2_000_000:
                     raise ValueError("Invalid save request.")
                 if handler.headers.get_content_type() != "application/json":
                     raise ValueError("Expected JSON.")
                 body = json.loads(handler.rfile.read(length))
-                handler.send_json(200, self.save_words(id, body["entries"]))
+                handler.send_json(
+                    200,
+                    self.rate_word(id, body)
+                    if action == "study"
+                    else self.save_words(id, body["entries"]),
+                )
             else:
                 if not 0 < length <= MAX_UPLOAD:
                     handler.close_connection = True

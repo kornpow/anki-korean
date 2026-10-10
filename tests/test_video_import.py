@@ -140,6 +140,41 @@ class VideoImportTests(unittest.TestCase):
         report["needs_review"].append(observation("frame_000000180.png", 50, english="unwind"))
         self.assertTrue(all(x["needs_review"] for x in self.manager.review_candidates(report)))
 
+    def test_study_ratings_are_persistent_and_retry_safe(self):
+        id = "a" * 32
+        self.seed(id)
+        event = {"card_id": 0, "rating": "again", "event_id": "1" * 32}
+        first = self.manager.rate_word(id, event)
+        retry = self.manager.rate_word(id, event)
+        self.assertEqual(first, retry)
+        self.assertTrue(retry["words"]["0"]["difficult"])
+        self.assertEqual(retry["words"]["0"]["reviews"], 1)
+        event.update(rating="gotit", event_id="2" * 32)
+        self.manager.rate_word(id, event)
+        reopened = VideoImports(self.manager.directory)
+        try:
+            state = reopened.study_state(id)
+            self.assertFalse(state["words"]["0"]["difficult"])
+            self.assertEqual(state["words"]["0"]["reviews"], 2)
+            self.assertEqual(state["words"]["0"]["again_count"], 1)
+        finally:
+            reopened.pool.shutdown()
+        with self.assertRaises(ValueError):
+            self.manager.rate_word(id, dict(event, card_id=99))
+        with self.assertRaises(ValueError):
+            self.manager.rate_word(id, dict(event, card_id=True))
+        with urllib.request.urlopen(self.url + "/api/imports/" + id + "/study") as response:
+            self.assertEqual(json.load(response)["words"]["0"]["reviews"], 2)
+        request = urllib.request.Request(
+            self.url + "/api/imports/" + id + "/study",
+            data=json.dumps(dict(event, event_id="3" * 32, rating="again")).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(request) as response:
+            self.assertTrue(json.load(response)["words"]["0"]["difficult"])
+        with urllib.request.urlopen(self.url + "/study") as response:
+            self.assertIn(b"Show answer", response.read())
+
     def test_restart_marks_interrupted_job(self):
         id = "a" * 32
         self.seed(id)
