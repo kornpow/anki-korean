@@ -1,0 +1,1169 @@
+{
+  "version": 1,
+  "description": "Starter annotations for the current vocabulary, curated from Korean forms rather than OCR English. Not a complete dictionary. Tags describe the displayed form; ambiguous senses remain flagged.",
+  "entries": {
+    "가위": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "가위"
+    },
+    "걸레": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "걸레"
+    },
+    "계산": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "계산",
+      "note": "Noun; 계산하다 is the corresponding verb."
+    },
+    "고깃집": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "고깃집"
+    },
+    "고무장갑": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "고무장갑"
+    },
+    "공연": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "공연"
+    },
+    "규칙": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "규칙"
+    },
+    "극장": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "극장"
+    },
+    "기분": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "기분"
+    },
+    "기사님": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "기사님"
+    },
+    "기침": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "기침",
+      "note": "Noun; 기침하다 is the corresponding verb."
+    },
+    "나라": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "나라"
+    },
+    "나중": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "나중"
+    },
+    "낮": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "낮"
+    },
+    "내년": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "내년"
+    },
+    "내용": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "내용"
+    },
+    "년": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "년"
+    },
+    "노란색": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "노란색"
+    },
+    "단추": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "단추"
+    },
+    "대박": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "대박"
+    },
+    "도착": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "도착",
+      "note": "Noun; 도착하다 is the corresponding verb."
+    },
+    "동생": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "동생"
+    },
+    "뒤쪽": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "뒤쪽"
+    },
+    "마지막": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "마지막"
+    },
+    "매표소": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "매표소"
+    },
+    "모양": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "모양"
+    },
+    "모임": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "모임"
+    },
+    "무료": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "무료"
+    },
+    "문제": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "문제"
+    },
+    "미술": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "미술"
+    },
+    "미용실": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "미용실"
+    },
+    "반지": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "반지"
+    },
+    "반찬": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "반찬"
+    },
+    "발표": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "발표",
+      "note": "Noun; 발표하다 is the corresponding verb."
+    },
+    "방학": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "방학"
+    },
+    "보라색": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "보라색"
+    },
+    "부케": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "부케"
+    },
+    "분": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "분"
+    },
+    "분홍색": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "분홍색"
+    },
+    "블라우스": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "블라우스"
+    },
+    "빗자루": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "빗자루"
+    },
+    "사이즈": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "사이즈"
+    },
+    "상품": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "상품"
+    },
+    "색깔": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "색깔"
+    },
+    "소다": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "소다"
+    },
+    "소식": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "소식"
+    },
+    "쇼핑몰": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "쇼핑몰"
+    },
+    "수고": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "수고"
+    },
+    "수학": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "수학"
+    },
+    "스페인어": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "스페인어"
+    },
+    "시간표": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "시간표"
+    },
+    "시청": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "시청"
+    },
+    "신발": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "신발"
+    },
+    "실수": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "실수"
+    },
+    "쌀": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "쌀"
+    },
+    "쓰레기": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "쓰레기"
+    },
+    "안방": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "안방"
+    },
+    "양말": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "양말"
+    },
+    "언어": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "언어"
+    },
+    "얼음": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "얼음"
+    },
+    "역사": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "역사"
+    },
+    "오전": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "오전"
+    },
+    "오해": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "오해"
+    },
+    "옷장": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "옷장"
+    },
+    "요가": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "요가"
+    },
+    "운동복": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "운동복"
+    },
+    "원피스": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "원피스"
+    },
+    "월": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "월"
+    },
+    "이유": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "이유"
+    },
+    "인형": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "인형"
+    },
+    "재채기": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "재채기"
+    },
+    "저녁": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "저녁"
+    },
+    "점심": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "점심"
+    },
+    "정리": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "정리",
+      "note": "Noun; 정리하다 is the corresponding verb."
+    },
+    "주황색": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "주황색"
+    },
+    "준비": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "준비",
+      "note": "Noun; 준비하다 is the corresponding verb."
+    },
+    "중미": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "중미"
+    },
+    "중학교": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "중학교"
+    },
+    "지각": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "지각",
+      "note": "Noun; 지각하다 is the corresponding verb."
+    },
+    "지우개": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "지우개"
+    },
+    "짐": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "짐"
+    },
+    "집안일": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "집안일"
+    },
+    "추천": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "추천",
+      "note": "Noun; 추천하다 is the corresponding verb."
+    },
+    "출근": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "출근",
+      "note": "Noun; 출근하다 is the corresponding verb."
+    },
+    "칠월": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "칠월"
+    },
+    "코끼리": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "코끼리"
+    },
+    "키": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "키"
+    },
+    "퇴근": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "퇴근",
+      "note": "Noun; 퇴근하다 is the corresponding verb."
+    },
+    "파나마": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "파나마"
+    },
+    "팔월": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "팔월"
+    },
+    "편지": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "편지"
+    },
+    "폴더": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "폴더"
+    },
+    "하루": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "하루"
+    },
+    "호텔": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "호텔"
+    },
+    "후": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "후"
+    },
+    "후배": {
+      "parts_of_speech": [
+        "noun"
+      ],
+      "lemma": "후배"
+    },
+    "가져오다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "가져오다"
+    },
+    "교환하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "교환하다"
+    },
+    "구경하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "구경하다"
+    },
+    "기다리다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "기다리다"
+    },
+    "끼다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "끼다"
+    },
+    "나다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "나다"
+    },
+    "내다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "내다"
+    },
+    "놓치다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "놓치다"
+    },
+    "눕다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "눕다"
+    },
+    "돕다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "돕다"
+    },
+    "떠나다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "떠나다"
+    },
+    "마치다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "마치다"
+    },
+    "맞다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "맞다"
+    },
+    "모으다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "모으다"
+    },
+    "물어보다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "물어보다"
+    },
+    "배우다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "배우다"
+    },
+    "버리다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "버리다"
+    },
+    "복습하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "복습하다"
+    },
+    "선택하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "선택하다"
+    },
+    "시작하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "시작하다"
+    },
+    "신다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "신다"
+    },
+    "싸우다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "싸우다"
+    },
+    "원하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "원하다"
+    },
+    "잃다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "잃다"
+    },
+    "자르다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "자르다"
+    },
+    "잡다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "잡다"
+    },
+    "준비하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "준비하다"
+    },
+    "줍다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "줍다"
+    },
+    "지나가다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "지나가다"
+    },
+    "칭찬하다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "칭찬하다"
+    },
+    "풀다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "풀다"
+    },
+    "먹다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "먹다"
+    },
+    "건강하다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "건강하다"
+    },
+    "곱다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "곱다"
+    },
+    "귀엽다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "귀엽다"
+    },
+    "그립다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "그립다"
+    },
+    "다양하다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "다양하다"
+    },
+    "더럽다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "더럽다"
+    },
+    "미안하다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "미안하다"
+    },
+    "새롭다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "새롭다"
+    },
+    "슬프다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "슬프다"
+    },
+    "심하다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "심하다"
+    },
+    "짧다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "짧다"
+    },
+    "차갑다": {
+      "parts_of_speech": [
+        "adjective"
+      ],
+      "lemma": "차갑다"
+    },
+    "갑자기": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "갑자기"
+    },
+    "곧": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "곧"
+    },
+    "그냥": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "그냥"
+    },
+    "다시": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "다시"
+    },
+    "따로": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "따로"
+    },
+    "얼마나": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "얼마나"
+    },
+    "엄청": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "엄청"
+    },
+    "왜": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "왜"
+    },
+    "이따가": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "이따가"
+    },
+    "이미": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "이미"
+    },
+    "일찍": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "일찍"
+    },
+    "자꾸": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "자꾸"
+    },
+    "자세히": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "자세히"
+    },
+    "좀": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "좀"
+    },
+    "참": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "참"
+    },
+    "혹시": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "혹시"
+    },
+    "까지": {
+      "parts_of_speech": [
+        "particle"
+      ],
+      "lemma": "까지"
+    },
+    "께": {
+      "parts_of_speech": [
+        "particle"
+      ],
+      "lemma": "께"
+    },
+    "부터": {
+      "parts_of_speech": [
+        "particle"
+      ],
+      "lemma": "부터"
+    },
+    "한테": {
+      "parts_of_speech": [
+        "particle"
+      ],
+      "lemma": "한테"
+    },
+    "한테서": {
+      "parts_of_speech": [
+        "particle"
+      ],
+      "lemma": "한테서"
+    },
+    "무슨": {
+      "parts_of_speech": [
+        "determiner"
+      ],
+      "lemma": "무슨"
+    },
+    "세": {
+      "parts_of_speech": [
+        "determiner"
+      ],
+      "lemma": "세"
+    },
+    "첫": {
+      "parts_of_speech": [
+        "determiner"
+      ],
+      "lemma": "첫"
+    },
+    "한": {
+      "parts_of_speech": [
+        "determiner"
+      ],
+      "lemma": "한"
+    },
+    "사": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "사"
+    },
+    "사십": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "사십"
+    },
+    "삼십": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "삼십"
+    },
+    "십": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "십"
+    },
+    "십오": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "십오"
+    },
+    "아홉": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "아홉"
+    },
+    "여덟": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "여덟"
+    },
+    "오": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "오"
+    },
+    "오십": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "오십"
+    },
+    "육": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "육"
+    },
+    "이십": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "이십"
+    },
+    "일곱": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "일곱"
+    },
+    "칠": {
+      "parts_of_speech": [
+        "numeral"
+      ],
+      "lemma": "칠"
+    },
+    "아무것": {
+      "parts_of_speech": [
+        "pronoun"
+      ],
+      "lemma": "아무것"
+    },
+    "다행이에요": {
+      "parts_of_speech": [
+        "phrase"
+      ],
+      "lemma": "다행"
+    },
+    "잠깐만요": {
+      "parts_of_speech": [
+        "phrase"
+      ],
+      "lemma": "잠깐만요"
+    },
+    "저기요": {
+      "parts_of_speech": [
+        "phrase"
+      ],
+      "lemma": "저기요"
+    },
+    "왜요": {
+      "parts_of_speech": [
+        "phrase"
+      ],
+      "lemma": "왜"
+    },
+    "쯤": {
+      "parts_of_speech": [
+        "suffix"
+      ],
+      "lemma": "쯤"
+    },
+    "굽다": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "굽다",
+      "note": "Different verb senses include grilling/baking and bending; use context to choose the meaning."
+    },
+    "늦다": {
+      "parts_of_speech": [
+        "verb",
+        "adjective"
+      ],
+      "lemma": "늦다",
+      "note": "Word type depends on the sense; check in a sentence."
+    },
+    "모두": {
+      "parts_of_speech": [
+        "noun",
+        "adverb"
+      ],
+      "lemma": "모두",
+      "note": "Can refer to everyone/everything or mean all, depending on use."
+    },
+    "서요": {
+      "parts_of_speech": [
+        "verb"
+      ],
+      "lemma": "서다",
+      "note": "Polite conjugated form of 서다 (to stand)."
+    },
+    "급하게": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "급하다",
+      "note": "Adverbial form of an adjective, formed with -게."
+    },
+    "깔끔하게": {
+      "parts_of_speech": [
+        "adverb"
+      ],
+      "lemma": "깔끔하다",
+      "note": "Adverbial form of an adjective, formed with -게."
+    }
+  },
+  "references": [
+    "https://krdict.korean.go.kr/eng/dicSearch/SearchView?ParaWordNo=60102&nation=eng",
+    "https://www.korean.go.kr/front/mcfaq/mcfaqView.do?mcfaq_seq=6788&mn_id=182&pageIndex=1",
+    "https://krdict.korean.go.kr/eng/dicMarinerSearch/search?mainSearchWord=%EC%AF%A4&nation=eng"
+  ]
+}

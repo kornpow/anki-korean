@@ -15,6 +15,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
+from word_types import FIELDS, annotate_word
+
 MAX_UPLOAD = 90 * 1024 * 1024
 EXTENSIONS = {".mp4", ".mov", ".m4v", ".avi", ".mkv", ".webm"}
 JOB_ROUTE = re.compile(r"^/api/imports/([a-f0-9]{32})(?:/(vocabulary|study|frames/[^/]+))?$")
@@ -48,12 +50,33 @@ class VideoImports:
         self.pool = ThreadPoolExecutor(max_workers=1)
         for path in self.directory.glob("*/job.json"):
             job = json.loads(path.read_text())
+            changed = False
+            for key in ("candidates", "saved_selection"):
+                for row in job.get(key, []):
+                    if "parts_of_speech" not in row:
+                        row.update(annotate_word(row))
+                        changed = True
+            if changed:
+                write_json(path, job)
+                if "candidates" in job:
+                    write_json(path.parent / "candidates.json", job["candidates"])
             if job["status"] in ("queued", "processing"):
                 job.update(
                     status="failed",
                     error="The server restarted during processing. Upload the video again.",
                 )
                 write_json(path, job)
+
+        library_path = self.directory / "vocabulary.json"
+        if library_path.exists():
+            library = json.loads(library_path.read_text())
+            changed = False
+            for row in library.get("entries", []):
+                if "parts_of_speech" not in row:
+                    row.update(annotate_word(row))
+                    changed = True
+            if changed:
+                write_json(library_path, library)
 
     def job_path(self, id):
         return self.directory / id / "job.json"
@@ -187,16 +210,18 @@ class VideoImports:
             right = max(line["left"] + line["width"] for line in lines) + 20
             bottom = max(line["top"] + line["height"] for line in lines) + 20
             bounds = {"x": left, "y": top, "width": right - left, "height": bottom - top}
-        return {
-            "id": index,
-            "bounds": bounds,
-            "korean_text": entry["korean_text"],
-            "english_text": entry["english_text"],
-            "needs_review": uncertain,
-            "confidence": observation.get("confidence"),
-            "timestamp_seconds": observation.get("timestamp_seconds"),
-            "frame": Path(observation["filename"]).name,
-        }
+        return annotate_word(
+            {
+                "id": index,
+                "bounds": bounds,
+                "korean_text": entry["korean_text"],
+                "english_text": entry["english_text"],
+                "needs_review": uncertain,
+                "confidence": observation.get("confidence"),
+                "timestamp_seconds": observation.get("timestamp_seconds"),
+                "frame": Path(observation["filename"]).name,
+            }
+        )
 
     def save_words(self, id, rows):
         job = self.read(id)
@@ -219,7 +244,11 @@ class VideoImports:
                     "Each selected word needs Korean and English text (maximum 500 characters)."
                 )
             cleaned.append(
-                dict(candidates[index], korean_text=korean.strip(), english_text=english.strip())
+                annotate_word(
+                    dict(
+                        candidates[index], korean_text=korean.strip(), english_text=english.strip()
+                    )
+                )
             )
         with self.lock:
             path = self.directory / "vocabulary.json"
@@ -247,6 +276,7 @@ class VideoImports:
                         "sources": [],
                     },
                 )
+                entry.update({field: row[field] for field in FIELDS})
                 entry["sources"].append(
                     {
                         "import_id": id,

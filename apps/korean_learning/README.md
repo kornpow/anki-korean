@@ -157,3 +157,27 @@ scheduler. Progress is shared by everyone using this prototype.
 
 Keyboard shortcuts: Space reveals the answer, 1 marks Practice again, and 2
 marks Got it. No feedback export is required.
+
+
+## Word types
+
+Import candidates, saved selections, and the shared vocabulary JSON now carry
+`parts_of_speech` (an array), `lemma` (base form), `pos_source`,
+`pos_needs_review`, and `pos_note`. Both review and flashcard screens display
+the tags. The study screen can filter a theme by word type.
+
+The starter lexicon is in [word_types.json](media/scripts/word_types.json).
+It classifies the Korean form independently of potentially faulty OCR English.
+It distinguishes verbs from adjectives/descriptive verbs, and nouns such as
+준비 from verbs such as 준비하다. It records 서다 as the base form of 서요,
+and identifies forms such as 깔끔하게 as adverbial uses of adjectives.
+Multiple tags represent context-dependent types, not multiple simultaneous
+sentence roles. Expressions are kept separate from individual word types.
+
+This is a curated starter lexicon, not a general morphological analyzer or a
+fully verified dictionary. Unknown words remain explicitly unclassified; a
+다 or 하다 ending alone never determines the tag. Existing records gain missing
+annotations on server startup, and new imports are annotated automatically
+when a known word is recognized. Saving corrected Korean recalculates its tags.
+These fields prepare for sentence exercises; particles, verb argument patterns,
+and conjugation rules still need their own modeling before sentence generation.

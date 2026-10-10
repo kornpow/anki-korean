@@ -14,6 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "apps/korean_learning/media/scripts"))
 from import_video import VideoImports, write_json
 from serve_review import Handler
+from word_types import annotate_word
 
 
 class VideoImportTests(unittest.TestCase):
@@ -174,6 +175,36 @@ class VideoImportTests(unittest.TestCase):
             self.assertTrue(json.load(response)["words"]["0"]["difficult"])
         with urllib.request.urlopen(self.url + "/study") as response:
             self.assertIn(b"Show answer", response.read())
+
+    def test_word_types_follow_korean_and_survive_saving(self):
+        def tags(korean):
+            return annotate_word({"korean_text": korean, "english_text": "bad OCR"})
+
+        self.assertEqual(tags("귀엽다")["parts_of_speech"], ["adjective"])
+        self.assertEqual(tags("그립다")["parts_of_speech"], ["adjective"])
+        self.assertEqual(tags("준비")["parts_of_speech"], ["noun"])
+        self.assertEqual(tags("준비하다")["parts_of_speech"], ["verb"])
+        self.assertEqual(tags("서요")["lemma"], "서다")
+        self.assertEqual(tags("깔끔하게")["parts_of_speech"], ["adverb"])
+        self.assertEqual(tags("깔끔하게")["lemma"], "깔끔하다")
+        self.assertEqual(tags("소식.")["parts_of_speech"], ["noun"])
+        self.assertTrue(tags("늦다")["pos_needs_review"])
+        self.assertEqual(tags("구 경 하다")["parts_of_speech"], ["unknown"])
+        self.assertEqual(tags("미등록하다")["parts_of_speech"], ["unknown"])
+        id = "a" * 32
+        self.seed(id)
+        self.manager.save_words(id, [{"id": 0, "korean_text": "귀엽다", "english_text": "cute"}])
+        saved = self.manager.read(id)["saved_selection"][0]
+        self.assertEqual(saved["parts_of_speech"], ["adjective"])
+        library = json.loads((self.manager.directory / "vocabulary.json").read_text())
+        self.assertEqual(library["entries"][0]["lemma"], "귀엽다")
+        reopened = VideoImports(self.manager.directory)
+        try:
+            migrated = reopened.read(id)
+            self.assertEqual(migrated["candidates"][0]["parts_of_speech"], ["verb"])
+            self.assertEqual(migrated["saved_selection"][0]["parts_of_speech"], ["adjective"])
+        finally:
+            reopened.pool.shutdown()
 
     def test_restart_marks_interrupted_job(self):
         id = "a" * 32
