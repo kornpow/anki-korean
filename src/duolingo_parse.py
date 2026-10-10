@@ -178,7 +178,7 @@ def image_inputs(source, output, interval):
     elif source.suffix.lower() in VIDEOS:
         import cv2
 
-        capture = cv2.VideoCapture(str(source))
+        capture = cv2.VideoCapture(str(source), cv2.CAP_FFMPEG, [cv2.CAP_PROP_N_THREADS, 2])
         try:
             if not capture.isOpened():
                 raise ValueError(f"Cannot open video: {source}")
@@ -215,7 +215,15 @@ def run(args):
     if not source.exists():
         raise ValueError(f"Input does not exist: {source}")
     text_input = source.is_file() and source.suffix.lower() == ".txt"
-    ocr = None if text_input else ensure_ocr()
+    neural = None
+    ocr = None
+    if not text_input:
+        if args.engine == "rapidocr":
+            from duolingo_rows import KoreanOCR
+
+            neural = KoreanOCR()
+        else:
+            ocr = ensure_ocr()
     output = args.output_dir.resolve()
     if output.exists() and any(output.iterdir()):
         raise ValueError(
@@ -260,14 +268,23 @@ def run(args):
                         image = image.resize(
                             (round(image.width * args.scale), round(image.height * args.scale))
                         )
-                    data = ocr.image_to_data(
-                        image,
-                        lang="kor+eng",
-                        config=f"--psm {args.psm}",
-                        output_type=ocr.Output.DICT,
-                        timeout=args.ocr_timeout,
-                    )
-                lines = ocr_lines(data)
+                    if neural:
+                        import cv2
+                        import numpy as np
+
+                        extracted, data = neural.lines(
+                            cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+                        )
+                        lines = [Line(**line) for line in extracted]
+                    else:
+                        data = ocr.image_to_data(
+                            image,
+                            lang="kor+eng",
+                            config=f"--psm {args.psm}",
+                            output_type=ocr.Output.DICT,
+                            timeout=args.ocr_timeout,
+                        )
+                        lines = ocr_lines(data)
             raw.append(dict(evidence, lines=[asdict(line) for line in lines], ocr_data=data))
             good, uncertain = parse_lines(lines, args.layout, args.min_confidence, not text_input)
             observations.extend(dict(evidence, **row) for row in good)
@@ -322,6 +339,12 @@ def main(argv=None):
         choices=["auto", "inline", "stacked"],
         default="auto",
         help="Stacked text imports must opt in; images also require geometric alignment",
+    )
+    parser.add_argument(
+        "--engine",
+        choices=["tesseract", "rapidocr"],
+        default="tesseract",
+        help="rapidocr uses CPU Korean PP-OCRv5 and Duolingo bordered-row detection",
     )
     parser.add_argument("--sort", choices=["korean", "english", "source"], default="korean")
     parser.add_argument("--min-confidence", type=float, default=65)

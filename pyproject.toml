@@ -15,6 +15,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+ocr = ["rapidocr==3.10.0", "onnxruntime==1.31.0"]
 review = [
     "requests>=2.32",
     "websocket-client>=1.9",

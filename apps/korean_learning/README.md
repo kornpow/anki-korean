@@ -5,9 +5,9 @@ A Python-backed media reviewer for planning a broader Korean learning tool. Revi
 ## Run from the repository root
 
 ```bash
-uv sync --extra review
-uv run --extra review python apps/korean_learning/media/scripts/prepare_media.py
-uv run --extra review python apps/korean_learning/media/scripts/serve_review.py
+uv sync --extra review --extra ocr
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/prepare_media.py
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/serve_review.py
 ```
 
 The server binds to `127.0.0.1:8000`. Access it on the host, through your own port forwarding, or through an existing tunnel. The repository does not provision a public URL.
@@ -21,7 +21,7 @@ Gallery paths:
 `prepare_media.py` downloads the exact Commons images referenced by the committed manifests, verifies checksums and dimensions, and builds all galleries. It stops on changed source bytes rather than silently using a different image. To reuse an existing download directory:
 
 ```bash
-uv run --extra review python apps/korean_learning/media/scripts/prepare_media.py \
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/prepare_media.py \
   --media-source /path/to/existing/media
 ```
 
@@ -40,14 +40,14 @@ The UI shows Saving, Saved, or a retry message. Offline edits are cached locally
 Edit `media/scripts/review_template.html` for the UI. After changing it or a collection manifest:
 
 ```bash
-uv run --extra review python apps/korean_learning/media/scripts/prepare_media.py
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/prepare_media.py
 ```
 
 Browser interaction checks use Obscura controlled directly from Python:
 
 ```bash
-uv run --extra review python apps/korean_learning/media/scripts/install_obscura.py
-uv run --extra review python apps/korean_learning/media/scripts/check_reviewer.py
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/install_obscura.py
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/check_reviewer.py
 ```
 
 The installer targets Linux x86_64. Set `OBSCURA_BINARY` to an existing executable on another supported platform. Tests use temporary feedback storage, leaving real reviews untouched. No Node, Playwright, or Selenium is required.
@@ -69,8 +69,22 @@ from background word extraction; keep the tab open until uploading finishes.
 The import URL can then be revisited while processing continues.
 
 The page accepts MP4, MOV, M4V, AVI, MKV and WebM, up to 90 MiB and five minutes.
-Codec support depends on OpenCV. Tesseract and its `kor` and `eng` language packs
-are required, as described in the repository README. Extraction samples one frame
+Codec support depends on OpenCV. The uploader uses local CPU inference with
+RapidOCR 3.10.0, ONNX Runtime 1.31.0 and the Korean PP-OCRv5 mobile recognition
+model. It supports the light-background, bordered Duolingo word list, with Korean
+above English. Cropped, dark-mode, wrapped or changed layouts may need another
+adapter; unsupported rows are skipped. The command-line parser retains Tesseract
+as its default for other input formats.
+
+The first neural OCR run downloads about 13 MB of model weights to
+`~/.cache/anki-korean/ocr`; subsequent runs use that cache and process recordings
+locally without sending media to a remote API. Keep the cache for offline use.
+Recognition uses two CPU threads and video decoding is limited to two threads.
+Complete vocabulary cells are identified before Korean and English recognition.
+Repeated pairs are consolidated (including comma-spacing variants), the strongest
+accepted observation supplies the preview, and conflicting definitions for the
+same Korean spelling are marked for review. Model scores are not calibrated
+probabilities or guarantees of correct spelling. Extraction samples one frame
 per second. One import processes at a time, with room for one queued upload.
 
 Review detected pairs beside their source frames, edit Korean or English, and
@@ -88,3 +102,22 @@ access to that import's results and frames: this remains a shared-link prototype
 not an authenticated multi-user service. Back up the imports directory to retain
 recordings and vocabulary. Files are retained until manually removed. Interrupted
 jobs are marked failed on restart and can be uploaded again.
+
+CPU OCR validation (2026-10-10): on 18 manually transcribed, fully visible rows
+across three frames of one recording, the earlier row-based Tesseract prototype
+matched 16/18 pairs exactly. Korean PP-OCRv5 matched 17/18 exactly; the remaining
+pair differed only by whitespace after a comma (18/18 when that spacing is ignored).
+Neural OCR took 5.12 seconds for the sampled crops after model initialization;
+the Tesseract comparison took 16.95 seconds including Python startup. These are
+exploratory measurements, not a held-out benchmark or guaranteed speedup.
+The first complete 15.72-second video run took 158.63 seconds including decoding,
+frame storage and OCR. Review remains necessary: another row in the full clip
+misspelled “grilling.” The uploader uses a conservative score threshold of 95
+and keeps lower-scoring pairs unchecked. It does not silently repair spellings.
+
+To use the same model from the command line:
+
+```bash
+uv run --extra ocr python src/duolingo_parse.py recording.mp4 \
+  --engine rapidocr --scale 1 --min-confidence 95 --output-dir imports/local-ocr
+```

@@ -109,6 +109,37 @@ class VideoImportTests(unittest.TestCase):
             self.assertEqual(error.exception.code, code)
         self.assertEqual(list(self.manager.directory.iterdir()), [])
 
+    def test_candidates_merge_repeats_and_keep_best_evidence(self):
+        def observation(filename, confidence, korean="풀다", english="untie, unwrap"):
+            return {
+                "filename": filename,
+                "confidence": confidence,
+                "korean_text": korean,
+                "english_text": english,
+                "timestamp_seconds": 0,
+            }
+
+        first = observation("frame_000000000.png", 91)
+        best = observation("frame_000000060.png", 99)
+        weak = observation("frame_000000120.png", 50, english="untie,unwrap")
+        report = {
+            "entries": [
+                {
+                    "korean_text": "풀다",
+                    "english_text": "untie, unwrap",
+                    "observations": [first, best],
+                }
+            ],
+            "needs_review": [weak],
+        }
+        candidates = self.manager.review_candidates(report)
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]["frame"], best["filename"])
+        self.assertEqual(candidates[0]["observation_count"], 3)
+        self.assertFalse(candidates[0]["needs_review"])
+        report["needs_review"].append(observation("frame_000000180.png", 50, english="unwind"))
+        self.assertTrue(all(x["needs_review"] for x in self.manager.review_candidates(report)))
+
     def test_restart_marks_interrupted_job(self):
         id = "a" * 32
         self.seed(id)

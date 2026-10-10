@@ -98,9 +98,9 @@ explanations, automatic feedback saving, attributed media catalogs, and the
 learning-tool plans.
 
 ```bash
-uv sync --extra review
-uv run --extra review python apps/korean_learning/media/scripts/prepare_media.py
-uv run --extra review python apps/korean_learning/media/scripts/serve_review.py
+uv sync --extra review --extra ocr
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/prepare_media.py
+uv run --extra review --extra ocr python apps/korean_learning/media/scripts/serve_review.py
 ```
 
 See the app README for gallery routes, media restoration, existing feedback

@@ -108,6 +108,10 @@ class VideoImports:
                         str(video),
                         "--output-dir",
                         str(output),
+                        "--engine",
+                        "rapidocr",
+                        "--min-confidence",
+                        "95",
                         "--scale",
                         "1",
                         "--interval",
@@ -124,13 +128,7 @@ class VideoImports:
                     "Check the format or ask me to inspect the import."
                 )
             report = json.loads(report_path.read_text())
-            candidates = []
-            for entry in report["entries"]:
-                first = entry["observations"][0]
-                candidates.append(self.candidate(len(candidates), entry, first, False))
-            for row in report["needs_review"]:
-                if row.get("korean_text") and row.get("english_text"):
-                    candidates.append(self.candidate(len(candidates), row, row, True))
+            candidates = self.review_candidates(report)
             write_json(video.parent / "candidates.json", candidates)
             self.update(
                 id,
@@ -139,7 +137,8 @@ class VideoImports:
                 candidates=candidates,
                 message="Review the detected words before saving."
                 if candidates
-                else "No pairs detected. Try a slower recording with both languages visible.",
+                else "No complete word rows detected. This importer supports Duolingo’s "
+                "light-background, bordered word list with Korean above English.",
             )
         except subprocess.TimeoutExpired:
             self.update(id, status="failed", error="Processing took too long. Try a shorter clip.")
@@ -148,10 +147,49 @@ class VideoImports:
         finally:
             self.slot.release()
 
+    @classmethod
+    def review_candidates(cls, report):
+        groups = {}
+        for entry in report["entries"]:
+            for observation in entry["observations"]:
+                key = (
+                    entry["korean_text"],
+                    re.sub(r"\s*,\s*", ",", entry["english_text"]).casefold(),
+                )
+                groups.setdefault(key, []).append((entry, observation, False))
+        for row in report["needs_review"]:
+            if row.get("korean_text") and row.get("english_text"):
+                key = (row["korean_text"], re.sub(r"\s*,\s*", ",", row["english_text"]).casefold())
+                groups.setdefault(key, []).append((row, row, True))
+        meanings = {}
+        for korean, english in groups:
+            meanings.setdefault(korean, set()).add(english)
+        candidates = []
+        for (korean, _), observations in sorted(groups.items()):
+            # Prefer accepted observations, then the strongest original frame.
+            entry, observation, uncertain = max(
+                observations, key=lambda item: (not item[2], item[1].get("confidence") or 0)
+            )
+            candidate = cls.candidate(
+                len(candidates), entry, observation, uncertain or len(meanings[korean]) > 1
+            )
+            candidate["observation_count"] = len({item[1]["filename"] for item in observations})
+            candidates.append(candidate)
+        return candidates
+
     @staticmethod
     def candidate(index, entry, observation, uncertain):
+        lines = observation.get("lines", [])
+        bounds = None
+        if lines and all(line.get("width", 0) > 0 for line in lines):
+            left = max(0, min(line["left"] for line in lines) - 20)
+            top = max(0, min(line["top"] for line in lines) - 20)
+            right = max(line["left"] + line["width"] for line in lines) + 20
+            bottom = max(line["top"] + line["height"] for line in lines) + 20
+            bounds = {"x": left, "y": top, "width": right - left, "height": bottom - top}
         return {
             "id": index,
+            "bounds": bounds,
             "korean_text": entry["korean_text"],
             "english_text": entry["english_text"],
             "needs_review": uncertain,
@@ -295,9 +333,7 @@ class VideoImports:
                     handler.close_connection = True
                     handler.send_json(
                         429,
-                        {
-                            "error": "Two imports are in progress. Please wait for one to finish."
-                        },
+                        {"error": "Two imports are in progress. Please wait for one to finish."},
                     )
                     return True
                 id = uuid.uuid4().hex
