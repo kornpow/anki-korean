@@ -121,3 +121,18 @@ To use the same model from the command line:
 uv run --extra ocr python src/duolingo_parse.py recording.mp4 \
   --engine rapidocr --scale 1 --min-confidence 95 --output-dir imports/local-ocr
 ```
+
+## Themed vocabulary review
+
+An import can include a `themes` array in its `job.json`. Each theme has `id`,
+`title`, `description`, `count`, and `candidate_ids`. The review page groups cards
+by theme and provides a **Study theme** selector. Filtering does not discard edits
+or selections; saving includes selected words across all themes. Imports without
+theme metadata retain the ordinary review view.
+
+The current two-minute recording has a manually curated first pass: 189 entries
+assigned once each across 13 themes. Group sizes follow the available vocabulary
+rather than padding every theme to 20 words. Its private import directory also
+contains `themes.json` and `themed-vocabulary.csv` for inspection. Grouping uses
+Korean meanings; original OCR English and review flags are preserved. Future
+uploads are not automatically classified yet.
