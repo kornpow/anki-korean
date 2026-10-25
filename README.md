@@ -9,7 +9,7 @@ cards. Import it using Anki's File → Import. The accompanying
 `wordlist/duolingo_korean.csv` is sorted by Korean spelling.
 
 ```bash
-uv run python src/create_deck.py 'wordlist/duolingo-korean-words-2026-10-22 (1).csv' \
+uv run python src/create_deck.py 'wordlist/duolingo-korean-words-2026-10-22.csv' \
   --name 'Duolingo Korean' --output wordlist/duolingo_korean.apkg
 ```
 

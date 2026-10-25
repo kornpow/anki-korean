@@ -5,7 +5,7 @@ https://www.duolingo.com/practice-hub/words.
 
 ## Saved word list
 
-`duolingo-korean-words-2026-10-22 (1).csv` contains 993 Korean and English
+`duolingo-korean-words-2026-10-22.csv` contains 993 Korean and English
 word pairs. Verification confirmed the columns are `korean,english`, with
 no empty fields. The filename date comes from the browser's UTC date.
 

@@ -10,3 +10,7 @@ frames/
 
 .venv/
 imports/
+# Local OCR experiments and temporary output
+local-archive/
+tempframes/
+.ruff_cache/
