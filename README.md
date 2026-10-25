@@ -2,6 +2,34 @@
 
 Create Korean flash cards from video content.
 
+## Make Anki cards from Duolingo words
+
+The current deck is `wordlist/duolingo_korean.apkg`: 993 Korean → English
+cards. Import it using Anki's File → Import. The accompanying
+`wordlist/duolingo_korean.csv` is sorted by Korean spelling.
+
+```bash
+uv run python src/create_deck.py 'wordlist/duolingo-korean-words-2026-10-22 (1).csv' \
+  --name 'Duolingo Korean' --output wordlist/duolingo_korean.apkg
+```
+
+Use `--sort english` to sort by translation or `--sort source` to retain the
+export's order. Sorting controls the exported list and initial card order;
+Anki's study settings control the order cards are presented.
+
+Add `--reverse` to generate cards in both directions (1,986 cards for 993 words).
+This uses a separate note model; choose a direction before importing to avoid
+keeping both versions as separate notes.
+
+The builder accepts both `korean,english` and the older
+`korean_text,english_text` columns. It removes exact duplicate pairs, preserves
+different translations for the same word, and rejects empty fields. Deck and
+note IDs are stable: importing the same deck again will not duplicate unchanged
+notes. Editing a word or translation creates a new note identity.
+
+Translations are preserved from the source CSV and have not been reviewed for
+accuracy. The generated cards contain text only.
+
 ## Usage
 
 ```bash
@@ -106,3 +134,15 @@ uv run --extra review --extra ocr python apps/korean_learning/media/scripts/serv
 See the app README for gallery routes, media restoration, existing feedback
 migration, and Obscura browser checks. Downloaded media and personal feedback
 are not committed.
+## Export your Duolingo words
+
+1. Open https://www.duolingo.com/practice-hub/words in your logged-in browser.
+2. Open DevTools (Mac: Option + Command + J) and select Console.
+3. Paste the contents of `src/export_duolingo_words.js` and press Enter.
+4. Keep the tab open while it expands **Load more**. It downloads a UTF-8 CSV
+   with `korean,english` columns once the row count matches the page total.
+
+The script reads the page and uses your existing login. It does not send your
+words anywhere. It expects Duolingo's English interface and Korean course.
+If Duolingo changes its page layout, it may need updating. Inspect the downloaded
+CSV before importing it into Anki. The video/OCR importer above remains available for recordings and screenshots.
