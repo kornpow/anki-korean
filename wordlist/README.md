@@ -1,5 +1,36 @@
 # Duolingo word export
 
+## Custom lists
+
+Personal lists live in `wordlist/custom/`, separate from the Duolingo export.
+The first list, `counting-words`, contains **개** (things), **번** (times), and
+**조각** (pieces/slices), with examples. These are our study definitions rather
+than copied Duolingo translations. 개 is the counting word, not 게.
+
+Run these commands from the repository root:
+
+```bash
+python3 src/custom_lists.py lists
+python3 src/custom_lists.py show counting-words
+python3 src/custom_lists.py create favorites
+python3 src/custom_lists.py add favorites 걷다 "to walk" --example "매일 걸어요." --example-english "I walk every day."
+python3 src/custom_lists.py remove favorites 걷다
+```
+
+You can also ask me to add words to a list. Lists are editable CSVs with
+`korean,english,example,example_english` columns. Duplicate Korean entries are
+rejected, and creating an existing list never overwrites it.
+
+To make Anki cards using the existing deck builder:
+
+```bash
+uv run python src/create_deck.py wordlist/custom/counting-words.csv --name "Korean Counting Words" --output wordlist/decks/counting-words.apkg --reverse
+```
+
+The cards use the Korean and English fields; examples stay in the source list.
+The deck builder also writes a two-column CSV next to the deck. Keep generated
+decks in `wordlist/decks/` to preserve the custom list's examples.
+
 The Korean word list was exported from the logged-in Duolingo page at
 https://www.duolingo.com/practice-hub/words.
 
